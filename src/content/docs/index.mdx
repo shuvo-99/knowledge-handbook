@@ -1,0 +1,39 @@
+---
+title: Knowledge Handbook
+description: My personal, searchable engineering knowledge base.
+template: splash
+hero:
+  tagline: Notes on what I learn — organized by topic, not by date.
+  actions:
+    - text: Start reading
+      link: databases/postgresql-indexes/
+      icon: right-arrow
+---
+
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Topics
+
+<CardGrid>
+	<LinkCard title="Software Engineering" description="Architecture, SOLID, design patterns, system design" href="software-engineering/" />
+	<LinkCard title="Backend" description="Node.js, NestJS, APIs, authentication, testing" href="backend/" />
+	<LinkCard title="Databases" description="SQL, PostgreSQL, MongoDB, indexing, transactions" href="databases/" />
+	<LinkCard title="Algorithms" description="DSA, problem-solving patterns, complexity" href="algorithms/" />
+</CardGrid>
+
+## How this works
+
+<CardGrid>
+	<Card title="Write" icon="pencil">
+		Add a Markdown file under `src/content/docs/<topic>/`. Copy `templates/note.md` to start.
+	</Card>
+	<Card title="Publish" icon="rocket">
+		Push to `main`. GitHub Actions builds and deploys the site.
+	</Card>
+	<Card title="Find" icon="magnifier">
+		Use search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) or browse topics in the sidebar.
+	</Card>
+	<Card title="Export" icon="document">
+		Print any page and choose **Save as PDF** — only the note content is printed.
+	</Card>
+</CardGrid>
