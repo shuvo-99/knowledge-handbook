@@ -10,16 +10,12 @@ hero:
       icon: right-arrow
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import TopicCards from '../../components/TopicCards.astro';
 
 ## Topics
 
-<CardGrid>
-	<LinkCard title="Software Engineering" description="Architecture, SOLID, design patterns, system design" href="software-engineering/" />
-	<LinkCard title="Backend" description="Node.js, NestJS, APIs, authentication, testing" href="backend/" />
-	<LinkCard title="Databases" description="SQL, PostgreSQL, MongoDB, indexing, transactions" href="databases/" />
-	<LinkCard title="Algorithms" description="DSA, problem-solving patterns, complexity" href="algorithms/" />
-</CardGrid>
+<TopicCards />
 
 ## How this works
 
@@ -28,7 +24,7 @@ import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 		Add a Markdown file under `src/content/docs/<topic>/`. Copy `templates/note.md` to start.
 	</Card>
 	<Card title="Publish" icon="rocket">
-		Push to `main`. GitHub Actions builds and deploys the site.
+		Push to `main`. Vercel builds and deploys the site.
 	</Card>
 	<Card title="Find" icon="magnifier">
 		Use search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) or browse topics in the sidebar.

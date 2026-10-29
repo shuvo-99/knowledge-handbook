@@ -1,0 +1,17 @@
+---
+// Homepage topic cards, built from src/topics.mjs and each topic's index.md description.
+import { getEntry } from 'astro:content';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { topics } from '../topics.mjs';
+
+const cards = await Promise.all(
+	topics.map(async ([title, directory]) => {
+		const overview = await getEntry('docs', directory);
+		return { title, description: overview?.data.description, href: `${directory}/` };
+	})
+);
+---
+
+<CardGrid>
+	{cards.map((card) => <LinkCard {...card} />)}
+</CardGrid>

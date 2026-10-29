@@ -2,20 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
-
-// Each topic is a folder in src/content/docs/. Notes inside are listed automatically,
-// ordered by `sidebar.order` in their frontmatter (then alphabetically).
-const topics = [
-	['Software Engineering', 'software-engineering'],
-	['Backend', 'backend'],
-	['Frontend', 'frontend'],
-	['Databases', 'databases'],
-	['Data Engineering', 'data-engineering'],
-	['Algorithms', 'algorithms'],
-	['DevOps & Cloud', 'devops-cloud'],
-	['AI / ML Research', 'ai-ml-research'],
-	['Teaching', 'teaching'],
-];
+import { topics } from './src/topics.mjs';
 
 // https://astro.build/config
 export default defineConfig({
