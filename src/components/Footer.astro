@@ -1,0 +1,26 @@
+---
+// Wraps Starlight's default footer (last updated, prev/next) and adds a site credit line.
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const author = { name: 'Md. Anonto Shuvo', url: 'https://github.com/shuvo-99' };
+const year = new Date().getFullYear();
+---
+
+<Default><slot /></Default>
+
+<div
+	class="mt-12 flex flex-col items-center justify-between gap-2 border-t border-(--sl-color-hairline) pt-6 text-xs text-(--sl-color-gray-3) sm:flex-row"
+>
+	<p>© {year} Anvo Handbook. All rights reserved.</p>
+	<p>
+		Developed by
+		<a
+			href={author.url}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="font-medium text-(--sl-color-white) underline-offset-4 hover:underline"
+		>
+			{author.name}
+		</a>
+	</p>
+</div>

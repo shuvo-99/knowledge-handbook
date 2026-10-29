@@ -25,7 +25,7 @@ export default defineConfig({
 		: undefined,
 	integrations: [
 		starlight({
-			title: 'Knowledge Handbook',
+			title: 'Anvo Handbook',
 			description: 'My personal, searchable engineering knowledge base.',
 			lastUpdated: true,
 			sidebar: topics.map(([label, directory]) => ({
@@ -33,6 +33,9 @@ export default defineConfig({
 				collapsed: true,
 				items: [{ autogenerate: { directory } }],
 			})),
+			components: {
+				Footer: './src/components/Footer.astro',
+			},
 			customCss: ['./src/styles/global.css'],
 		}),
 	],
