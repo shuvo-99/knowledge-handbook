@@ -25,6 +25,15 @@ export default defineConfig({
 			},
 			customCss: ['./src/styles/global.css'],
 		}),
+		{
+			// The sidebar is read once at startup, so restart the dev server when the topic list changes.
+			name: 'watch-topics',
+			hooks: {
+				'astro:config:setup': ({ addWatchFile }) => {
+					addWatchFile(new URL('./src/topics.mjs', import.meta.url));
+				},
+			},
+		},
 	],
 	vite: {
 		plugins: [tailwindcss()],
