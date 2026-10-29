@@ -19,9 +19,10 @@ const topics = [
 
 // https://astro.build/config
 export default defineConfig({
-	// Set by the GitHub Pages workflow; unset locally so dev runs at "/".
-	site: process.env.SITE,
-	base: process.env.BASE_PATH,
+	// Vercel provides the production domain at build time (used for sitemap and canonical URLs).
+	site: process.env.VERCEL_PROJECT_PRODUCTION_URL
+		? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+		: undefined,
 	integrations: [
 		starlight({
 			title: 'Knowledge Handbook',

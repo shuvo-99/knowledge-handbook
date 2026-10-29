@@ -27,10 +27,10 @@ New notes show up in the sidebar automatically. To add a new topic, create a fol
 
 ## Deploying
 
-Pushing to `main` runs `.github/workflows/deploy.yml`, which publishes to
-`https://<username>.github.io/<repo>/`. In the repo settings, set **Pages → Source** to **GitHub Actions**.
+Hosted on [Vercel](https://vercel.com). The repo is connected to a Vercel project, so every push to `main`
+deploys to production and every other branch gets a preview URL. Vercel detects Astro and pnpm automatically.
 
-GitHub Pages sites are **public**, even from a private repo. Don't publish work code, credentials or anything personal.
+The deployed site is **public**. Don't publish work code, credentials or anything personal.
 
 ## Export as PDF
 
