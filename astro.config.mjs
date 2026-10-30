@@ -3,19 +3,10 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
 
-// Each topic is a folder in src/content/docs/. Notes inside are listed automatically,
-// ordered by `sidebar.order` in their frontmatter (then alphabetically).
-const topics = [
-	['Software Engineering', 'software-engineering'],
-	['Backend', 'backend'],
-	['Frontend', 'frontend'],
-	['Databases', 'databases'],
-	['Data Engineering', 'data-engineering'],
-	['Algorithms', 'algorithms'],
-	['DevOps & Cloud', 'devops-cloud'],
-	['AI / ML Research', 'ai-ml-research'],
-	['Teaching', 'teaching'],
-];
+// Imported with a cache-busting query: Node caches modules, so a plain import would keep
+// the old topic list when the dev server restarts after topics.mjs changes.
+const topicsUrl = new URL('./src/topics.mjs', import.meta.url);
+const { topics } = await import(`${topicsUrl.href}?t=${Date.now()}`);
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,7 +17,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Anvo Handbook',
-			description: 'My personal, searchable engineering knowledge base.',
+			description: 'Notes, examples and practice for learning programming and data structures.',
 			lastUpdated: true,
 			sidebar: topics.map(([label, directory]) => ({
 				label,
@@ -38,6 +29,15 @@ export default defineConfig({
 			},
 			customCss: ['./src/styles/global.css'],
 		}),
+		{
+			// The sidebar is read once at startup, so restart the dev server when the topic list changes.
+			name: 'watch-topics',
+			hooks: {
+				'astro:config:setup': ({ addWatchFile }) => {
+					addWatchFile(topicsUrl);
+				},
+			},
+		},
 	],
 	vite: {
 		plugins: [tailwindcss()],
