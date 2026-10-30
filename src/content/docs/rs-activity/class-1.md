@@ -128,118 +128,217 @@ From fastest to slowest:
 | `O(n²)` | Quadratic | Nested loops over the same array |
 | `O(2ⁿ)` | Exponential | Naive recursive Fibonacci |
 
-### How to find it
-**Example-1**
+### How to calculate it
+
+Count how many times each statement runs, then add them up and apply the Big-O rules.
+
+- Every simple statement or declaration counts as **1 unit**.
+- A loop's condition is checked **one more time** than its body runs: the last check is the one that fails and ends the loop.
+
+#### Example 1: Single loop
 
 ```java
-A = [9,6,12,17,11]
-n = 5
+// A = [9, 6, 12, 17, 11], n = 5
+int sum(int[] A, int n) {
+    int s = 0;                  // -----> 1
 
-int Sum(A,n){
-  
-  int s = 0;    //-------> 1
-
-  for ( int i=0; i<n; i++){  //-------> n+1
-    s = s + A[i]; //-----> n
-  }
-
-  return s;  //-----> n
-};
-```
-
-Note - statement / declarations are count as 1 unit
-
-Lets's break it down.
-```
-i= 0, 0 < 5 correct mark 
-i= 1, 1 < 5 correct mark 
-i= 2, 2 < 5 correct mark 
-i= 3, 3 < 5 correct mark 
-i= 4, 4 < 5 correct mark 
-i= 5, 5 < 5 correct mark 
-i= 6, 6 < 5 cross mark 
-```
-now conditioned, 
-satisfied - 5 times
-not satisfied - 1 times
-------------------------
-Total = 6 (5 +1) times loop iterated
-i.e (n+1) - times loop iterated
-
-Went inside the loop = 5 i.e n times 
-
-**`TC = 1 + n + 1 + n = O(n)`**
-
-Again, `A` has a array stored in it. So, `A` has a space of `5` i.e `n`
-
-`n, s, i` are scalar variables here and has 1 unit.
-
-**`SC = n + 1 + 1 + 1 = O(n)`**
-
-**Example-2**
-
-```java
-for ( int i=0; i<n; i++){   //-----> n+1
-  for ( int j=0; j<n; j++){ //-----> (n)*(n+1)
-    s = s + A[i];           //-----> (n*n)
-  }
-}
-```
-**`TC = n + 1 + n^2 + n + n^2 = O(n^2)`**
-
-**Example-3**
-
-```java
-for ( int i=0; i<n; i++){   //-----> n+1
-  for ( int j=0; j<n; j++){ //-----> (n)*(n+1)
-    s = 10;                 //-----> (n*n)
-
-    for ( int k=0; k<n; j++){   //-----> (n*n)(n+1)
-      s = s + A[i];             //-----> (n*n*n)
+    for (int i = 0; i < n; i++) {   // -----> n + 1
+        s = s + A[i];           // -----> n
     }
-  }
+
+    return s;                   // -----> 1
 }
 ```
-**`TC = n + 1 + n^2 + n + n^2 + n^3 + n^2 + n^3 = O(n^3)`**
 
-**Example-4**
+Let's break the loop down:
+
+```text
+i = 0, 0 < 5  ✔
+i = 1, 1 < 5  ✔
+i = 2, 2 < 5  ✔
+i = 3, 3 < 5  ✔
+i = 4, 4 < 5  ✔
+i = 5, 5 < 5  ✘  → loop ends
+```
+
+- Condition satisfied: 5 times (`n`), so the body runs `n` times
+- Condition not satisfied: 1 time
+- Total condition checks: 5 + 1 = 6, i.e. `n + 1`
+
+**`TC = 1 + (n + 1) + n + 1 = 2n + 3 = O(n)`**
+
+**Space:** `A` stores an array of 5 elements, i.e. `n` units. `n`, `s` and `i` are scalar variables, 1 unit each.
+
+**`SC = n + 1 + 1 + 1 = n + 3 = O(n)`**
+
+:::note
+Here the input array `A` is counted. If you count only the **extra** memory the code uses (auxiliary space), it's just `n`, `s` and `i`, so the auxiliary space is `O(1)`.
+:::
+
+#### Example 2: Nested loops
 
 ```java
-for ( int i=0; i<n; i=i+2){ //-----> (n/2)+1
-  // statement                -----> n/2
+for (int i = 0; i < n; i++) {       // -----> n + 1
+    for (int j = 0; j < n; j++) {   // -----> n * (n + 1)
+        s = s + A[i];               // -----> n * n
+    }
 }
 ```
-**`TC = n/2 = O(n)`**
 
-**Example-5**
+**`TC = (n + 1) + (n² + n) + n² = 2n² + 2n + 1 = O(n²)`**
+
+#### Example 3: Three nested loops
 
 ```java
-for ( int i=0; i<n; i++){       //-----> n+1
-  for ( int j=i+1; j<n; j++){   //-----> n+1
-    s = s + A[i];               //-----> n+1
-  }
+for (int i = 0; i < n; i++) {           // -----> n + 1
+    for (int j = 0; j < n; j++) {       // -----> n * (n + 1)
+        s = 10;                         // -----> n * n
+
+        for (int k = 0; k < n; k++) {   // -----> (n * n) * (n + 1)
+            s = s + A[i];               // -----> n * n * n
+        }
+    }
 }
 ```
-```
-TC = (n-1) + (n-2) + (n-3) + ..... + 1 + 0
 
-We know,
+**`TC = (n + 1) + (n² + n) + n² + (n³ + n²) + n³ = 2n³ + 3n² + 2n + 1 = O(n³)`**
 
-for 0 to n = n(n+1)/2
-
-Therfore, for 0 to n-1 = ((n-1)(n-1+1))/2 = O(n^2) 
-``` 
-
-**Example-6**
+#### Example 4: Loop with a step of 2
 
 ```java
-for ( int i=0; i<n; i = i+k){ //-----> (n/k) + 1
-  for ( int j=0; j<=k; j++){  //-----> (n/k)*(k+2)
-    // Statement                -----> (n/k)*(k+1)
-  }
+for (int i = 0; i < n; i = i + 2) { // -----> n/2 + 1
+    // statement                       -----> n/2
 }
 ```
-**`TC = (n/k) * (k+1) = n + n/k = O(n)`**
+
+`i` goes 0, 2, 4, … so the loop runs only half as many times.
+
+**`TC = (n/2 + 1) + n/2 = n + 1 = O(n)`**
+
+#### Example 5: Inner loop depends on `i`
+
+```java
+for (int i = 0; i < n; i++) {           // -----> n + 1
+    for (int j = i + 1; j < n; j++) {   // -----> runs (n - 1 - i) times
+        s = s + A[i];                   // -----> (n - 1) + (n - 2) + ... + 0
+    }
+}
+```
+
+| `i` | Inner loop runs |
+| --- | --- |
+| 0 | `n - 1` times |
+| 1 | `n - 2` times |
+| … | … |
+| `n - 1` | 0 times |
+
+```text
+TC = (n - 1) + (n - 2) + (n - 3) + ... + 1 + 0
+
+We know, 1 + 2 + ... + n = n(n + 1) / 2
+
+Therefore, 1 + 2 + ... + (n - 1) = (n - 1)(n - 1 + 1) / 2
+                                 = n(n - 1) / 2
+                                 = (n² - n) / 2
+                                 = O(n²)
+```
+
+#### Example 6: Outer loop jumps by `k`
+
+```java
+//n=50, k=5
+for (int i = 0; i < n; i = i + k) {  // -----> n/k + 1
+    for (int j = 0; j <= k; j++) {   // -----> (n/k) * (k + 2)
+        // statement                    -----> (n/k) * (k + 1)
+    }
+}
+```
+
+The outer loop runs `n/k` times (same as example-4), and the inner loop runs `k + 1` times for each of them.
+
+**`TC = (n/k) * (k + 1) = n + n/k = O(n)`**
+
+### Practice
+
+Calculate these yourself first, then open the answer to verify.
+
+#### Example 7
+
+```java
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+        // statement
+    }
+}
+```
+
+<details>
+<summary>Show answer</summary>
+
+The inner loop runs `i` times, so for `i = 0, 1, 2, …, n - 1`:
+
+```text
+0 + 1 + 2 + ... + (n - 1) = n(n - 1) / 2
+```
+
+**`TC = O(n²)`**
+
+</details>
+
+#### Example 8
+
+```java
+int p = 0;
+for (int i = 1; p <= n; i++) {
+    p = p + i;
+}
+```
+
+<details>
+<summary>Show answer</summary>
+
+| `i` | `p` |
+| --- | --- |
+| 1 | 0 + 1 = 1 |
+| 2 | 1 + 2 = 3 |
+| 3 | 1 + 2 + 3 = 6 |
+| … | … |
+| `k` | 1 + 2 + ... + k = k(k + 1) / 2 |
+
+The loop stops when `p > n`:
+
+```text
+k(k + 1) / 2 > n
+k² > n          (roughly)
+k > √n
+```
+
+**`TC = O(√n)`**
+
+</details>
+
+#### Example 9
+
+```java
+for (int i = 1; i < n; i = i * 2) {
+    // statement
+}
+```
+
+<details>
+<summary>Show answer</summary>
+
+`i` doubles every step: `1, 2, 4, 8, …, 2ᵏ`. The loop stops when `2ᵏ ≥ n`:
+
+```text
+2ᵏ ≥ n
+k ≥ log₂ n
+```
+
+**`TC = O(log n)`**
+
+</details>
+
 
 <!-- Rules of thumb:
 
@@ -265,7 +364,3 @@ Connecting the two topics:
 - **Hidden loops.** Calling `list.contains(x)` inside a loop is `O(n)` × `O(n)` = `O(n²)`.
 - **Keeping constants.** `O(2n)` is just `O(n)`.
 - **Confusing best and worst case.** Big-O usually means the worst case unless stated otherwise. -->
-
-## Questions / follow-ups
-
--
