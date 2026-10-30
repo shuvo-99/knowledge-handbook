@@ -80,12 +80,38 @@ Copying is `O(n)`, but it happens rarely, so `add()` at the end is **`O(1)` on a
 
 ## Time Complexity
 
-### What it is
+### Why measure code?
 
-Time complexity describes **how the running time of an algorithm grows as the input size `n` grows**. We write it in **Big-O notation**, which keeps only the fastest-growing term and drops constants:
+When buying a car, we look at parameters like speed, price and capacity to judge its performance and quality.
 
-- `3n + 5` → `O(n)`
-- `n² + 100n` → `O(n²)`
+In the same way, we judge code by two parameters:
+
+- **Time complexity** — how long the code takes to run
+- **Space complexity** — how much extra memory it uses
+
+### Best, average and worst case
+
+The same code can take different amounts of time depending on the input. For example, say we search an array for the value `8`:
+
+| Case | Array | Result |
+| --- | --- | --- |
+| Best case | `[8, 3, 1, 5, 4]` | Found in the 1st iteration |
+| Average case | `[1, 4, 13, 8, 3, 2]` | Found after some iterations |
+| Worst case | `[1, 2, 9, 16, 7, 11, 8]` | Found only after going through the whole array |
+
+Time complexity is measured for the **worst case**, i.e. how much time the code takes in the worst-case scenario. That gives a guarantee: the code will never be slower than this.
+
+### Big-O notation
+
+Time complexity describes **how the running time of an algorithm grows as the input size `n` grows**. We write it in **Big-O notation**, which has two rules:
+
+1. **Ignore constants**
+2. **Keep only the largest term**
+
+| Expression | Big-O |
+| --- | --- |
+| `3n + 5` | `O(n)` |
+| `n² + 100n` | `O(n²)` |
 
 It answers "how does this scale?", not "how many milliseconds does it take?".
 
@@ -103,32 +129,113 @@ From fastest to slowest:
 | `O(2ⁿ)` | Exponential | Naive recursive Fibonacci |
 
 ### How to find it
-
-Count how many times the most-repeated statement runs.
+**Example-1**
 
 ```java
-// O(1) — runs once, no matter how big n is
-int x = arr[0];
+A = [9,6,12,17,11]
+n = 5
 
-// O(n) — one loop over n elements
-for (int i = 0; i < n; i++) {
-    sum += arr[i];
-}
+int Sum(A,n){
+  
+  int s = 0;    //-------> 1
 
-// O(n²) — nested loops: n × n
-for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-        count++;
-    }
-}
+  for ( int i=0; i<n; i++){  //-------> n+1
+    s = s + A[i]; //-----> n
+  }
 
-// O(log n) — the problem halves every step
-while (n > 1) {
-    n = n / 2;
-}
+  return s;  //-----> n
+};
 ```
 
-Rules of thumb:
+Note - statement / declarations are count as 1 unit
+
+Lets's break it down.
+```
+i= 0, 0 < 5 correct mark 
+i= 1, 1 < 5 correct mark 
+i= 2, 2 < 5 correct mark 
+i= 3, 3 < 5 correct mark 
+i= 4, 4 < 5 correct mark 
+i= 5, 5 < 5 correct mark 
+i= 6, 6 < 5 cross mark 
+```
+now conditioned, 
+satisfied - 5 times
+not satisfied - 1 times
+------------------------
+Total = 6 (5 +1) times loop iterated
+i.e (n+1) - times loop iterated
+
+Went inside the loop = 5 i.e n times 
+
+**`TC = 1 + n + 1 + n = O(n)`**
+
+**Example-2**
+
+```java
+for ( int i=0; i<n; i++){   //-----> n+1
+  for ( int j=0; j<n; j++){ //-----> (n)*(n+1)
+    s = s + A[i];           //-----> (n*n)
+  }
+}
+```
+**`TC = n + 1 + n^2 + n + n^2 = O(n^2)`**
+
+**Example-3**
+
+```java
+for ( int i=0; i<n; i++){   //-----> n+1
+  for ( int j=0; j<n; j++){ //-----> (n)*(n+1)
+    s = 10;                 //-----> (n*n)
+
+    for ( int k=0; k<n; j++){   //-----> (n*n)(n+1)
+      s = s + A[i];             //-----> (n*n*n)
+    }
+  }
+}
+```
+**`TC = n + 1 + n^2 + n + n^2 + n^3 + n^2 + n^3 = O(n^3)`**
+
+**Example-4**
+
+```java
+for ( int i=0; i<n; i=i+2){ //-----> (n/2)+1
+  // statement                -----> n/2
+}
+```
+**`TC = n/2 = O(n)`**
+
+**Example-5**
+
+```java
+for ( int i=0; i<n; i++){       //-----> n+1
+  for ( int j=i+1; j<n; j++){   //-----> n+1
+    s = s + A[i];               //-----> n+1
+  }
+}
+```
+```
+TC = (n-1) + (n-2) + (n-3) + ..... + 1 + 0
+
+We know,
+
+for 0 to n = n(n+1)/2
+
+Therfore, for 0 to n-1 = ((n-1)(n-1+1))/2 = O(n^2) 
+``` 
+
+**Example-6**
+
+```java
+for ( int i=0; i<n; i = i+k){ //-----> (n/k) + 1
+  for ( int j=0; j<=k; j++){  //-----> (n/k)*(k+2)
+    // Statement                -----> (n/k)*(k+1)
+  }
+}
+```
+**`TC = (n/k) * (k+1) = n + n/k = O(n)`**
+
+<!-- Rules of thumb:
 
 - Loops **one after another** → add: `O(n) + O(n) = O(n)`
 - Loops **inside each other** → multiply: `O(n) × O(n) = O(n²)`
@@ -151,7 +258,7 @@ Connecting the two topics:
 
 - **Hidden loops.** Calling `list.contains(x)` inside a loop is `O(n)` × `O(n)` = `O(n²)`.
 - **Keeping constants.** `O(2n)` is just `O(n)`.
-- **Confusing best and worst case.** Big-O usually means the worst case unless stated otherwise.
+- **Confusing best and worst case.** Big-O usually means the worst case unless stated otherwise. -->
 
 ## Questions / follow-ups
 
