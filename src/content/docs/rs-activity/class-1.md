@@ -170,6 +170,12 @@ Went inside the loop = 5 i.e n times
 
 **`TC = 1 + n + 1 + n = O(n)`**
 
+Again, `A` has a array stored in it. So, `A` has a space of `5` i.e `n`
+
+`n, s, i` are scalar variables here and has 1 unit.
+
+**`SC = n + 1 + 1 + 1 = O(n)`**
+
 **Example-2**
 
 ```java
