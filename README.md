@@ -1,6 +1,6 @@
-# Knowledge Handbook
+# Anvo Handbook
 
-My personal, searchable engineering knowledge base, built with [Astro Starlight](https://starlight.astro.build) and Tailwind CSS.
+Notes, examples and practice for learning programming and data structures, built with [Astro Starlight](https://starlight.astro.build) and Tailwind CSS.
 
 ## Layout
 

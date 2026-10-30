@@ -1,35 +1,23 @@
 ---
 title: Anvo Handbook
-description: My personal, searchable engineering knowledge base.
+description: Notes, examples and practice for learning programming.
 template: splash
 hero:
-  tagline: Notes on what I learn — organized by topic, not by date.
+  tagline: Notes, examples and practice for learning programming.
   actions:
     - text: Start reading
-      link: databases/postgresql-indexes/
+      link: rs-activity/
       icon: right-arrow
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 import TopicCards from '../../components/TopicCards.astro';
+import AboutAuthor from '../../components/AboutAuthor.astro';
 
 ## Topics
 
 <TopicCards />
 
-## How this works
+## About the author
 
-<CardGrid>
-	<Card title="Write" icon="pencil">
-		Add a Markdown file under `src/content/docs/<topic>/`. Copy `templates/note.md` to start.
-	</Card>
-	<Card title="Publish" icon="rocket">
-		Push to `main`. Vercel builds and deploys the site.
-	</Card>
-	<Card title="Find" icon="magnifier">
-		Use search (<kbd>Ctrl</kbd> + <kbd>K</kbd>) or browse topics in the sidebar.
-	</Card>
-	<Card title="Export" icon="document">
-		Print any page and choose **Save as PDF** — only the note content is printed.
-	</Card>
-</CardGrid>
+<AboutAuthor />

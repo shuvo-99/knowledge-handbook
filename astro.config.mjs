@@ -17,7 +17,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Anvo Handbook',
-			description: 'My personal, searchable engineering knowledge base.',
+			description: 'Notes, examples and practice for learning programming and data structures.',
 			lastUpdated: true,
 			sidebar: topics.map(([label, directory]) => ({
 				label,
