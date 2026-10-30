@@ -12,6 +12,26 @@
 }
 
 /*
+Desktop layout: fixed-width right column ("On this page") instead of Starlight's default,
+which gives it half of all spare screen width. The middle column centers in what's left.
+*/
+:root {
+	--right-toc-width: 16rem;
+	--sl-content-width: 50rem;
+}
+
+@media (min-width: 72rem) {
+	.right-sidebar-container {
+		width: var(--right-toc-width);
+	}
+
+	[data-has-sidebar][data-has-toc] .main-pane {
+		--sl-content-margin-inline: auto;
+		width: calc(100% - var(--right-toc-width));
+	}
+}
+
+/*
 Print / "Save as PDF": show only the main content column.
 */
 @media print {
