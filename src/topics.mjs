@@ -11,5 +11,5 @@ export const topics = [
 	// ['DevOps & Cloud', 'devops-cloud'],
 	// ['AI / ML Research', 'ai-ml-research'],
 	// ['Teaching', 'teaching'],
-	['RS Activity', 'rs-activity'],
+	['RS Activity – CP', 'rs-activity'],
 ];
