@@ -24,7 +24,7 @@ The goal of these classes is to:
 | Class | Topics |
 | --- | --- |
 | [Class 1](class-1/) | ArrayList, Time & Space Complexity |
-| Class 2 | Coming soon |
+| [Class 2](class-2/) | Linked List, Singly Linked List operations |
 | Class 3 | Coming soon |
 | Class 4 | Coming soon |
 | Class 5 | Coming soon |
